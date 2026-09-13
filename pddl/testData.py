@@ -1,3 +1,5 @@
+# one time test data processing for model inference
+
 test_block, b, env, _, _ = collect_data(3)
 
 test_cands = torch.zeros(17,4)
