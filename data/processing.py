@@ -7,6 +7,8 @@ class train_dataset(Dataset):
         cands = torch.zeros(17,4)
         block_info = torch.zeros(10,4)
 
+        # conver Grasp_candidate to model training data format
+        # block includes info about block to be grasped.
         for cand in self.env_info[idx][3]:
             if cand.grasp_type.value == "top_down_y":
                 gtype = [1.0, 0.0, 0.0]
