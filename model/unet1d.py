@@ -6,19 +6,19 @@ num_total = 32
 grasp_dim = 17      # output
 block_dim = 10       # condition
 
-# in_channels = output + condition dims
+# default model from huggingface
 model = UNet1DModel(
     in_channels=grasp_dim + block_dim,
     out_channels=grasp_dim,
     block_out_channels=(64, 256), 
-    
-    # 4. UNet + Self-Attention
+
+    # Unet encoder
     down_block_types=(
         "DownBlock1D",
         "AttnDownBlock1D"
     ),
     up_block_types=(
-        "AttnUpBlock1D", # corresponding decoder layer
+        "AttnUpBlock1D", # decoder layer
         "UpBlock1D"
     ),
 )
