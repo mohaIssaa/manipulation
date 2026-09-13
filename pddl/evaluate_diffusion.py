@@ -1,5 +1,6 @@
 def plan_loop(loaded_model, guidance_scale, noise_scheduler, uncond_block_cnn, test_block_cnn, generated_grasp_cnn):
 
+    # reverse to denoise back with noise scheduler under conditional information
     with torch.no_grad():
         for t in noise_scheduler.timesteps:
         
@@ -19,7 +20,7 @@ def plan_loop(loaded_model, guidance_scale, noise_scheduler, uncond_block_cnn, t
 
     return final_grasp
 
-
+# evaluate with ik motion planner to grasp under physical world
 planner = RRTStar(env); planner.max_iterations = 2000; planner.step_size = 0.15
 c = final_grasp[0][:,0][3:]
 grasp_quat, approach_pos, grasp_pos, lift_pos, score = c[:4], c[4:7], c[7:10], c[10:13], c[13]
@@ -39,7 +40,7 @@ while (approach == None or grasp == None or lift == None) and (cnt<5):
     lift = planner.plan_to_pose(lift_pos, grasp_quat)
     cnt += 1
 
-
+# execute approach -> grasp -> lift, when valid motions found
 reset_robot(env)
 env.execute_path(approach, planner)
 env.wait_idle()
@@ -60,6 +61,7 @@ env.remove_collision_exception("block_a")
 env.wait_idle()
 print("success!")
 
+# visualization
 after_img = render_view(env, azimuth=135, elevation=-25)
 second_img = render_view(env, azimuth=105, elevation=-10)
 
