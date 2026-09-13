@@ -2,7 +2,8 @@ from tampanda import ArmSceneBuilder
 from tampanda.scenes import BLOCK_SMALL_TEMPLATE, BLOCK_MEDIUM_TEMPLATE, TABLE_TEMPLATE, TABLE_SYMBOLIC_TEMPLATE
 
 def make_builder() -> ArmSceneBuilder:
-    
+
+    # register most necessary/basic simulation template separately
     builder = ArmSceneBuilder()
     builder.add_resource("table",  TABLE_SYMBOLIC_TEMPLATE)
     builder.add_resource("cube", BLOCK_SMALL_TEMPLATE)
