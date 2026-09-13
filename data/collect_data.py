@@ -14,6 +14,7 @@ def collect_data(n=5):
         y = rng.uniform(-0.20, 0.20)
         pose = [x, y, 0.27]
 
+        # 1,2: default block with size 4, and 6. 3-6: blocks from ycb for extended advanced test.
         idx = np.random.choice(np.arange(6), p=[0.4, 0.4, 0.05, 0.05, 0.08, 0.02]) # 0.28, 0.28, 0.15, 0.15, 0.02, 0.10, 0.02
         if idx == 0:
             builder.add_object("cube", pos=pose, name="block_a")
@@ -28,6 +29,7 @@ def collect_data(n=5):
         elif idx == 5:
             builder.add_object("wood_block", pos=pose, name="block_a")
 
+        # set block position within work space
         env = builder.build_env(rate=200.0)
         domain  = BlocksDomain(env.model, table_geom_name="table_surface")
         BOUNDS  = domain.get_working_bounds()        
@@ -35,6 +37,7 @@ def collect_data(n=5):
         env.set_object_pose("block_a", np.array([x, y, BOUNDS["table_height"] + BLOCK_HALF[2] + 0.003]))
         env.reset_velocities(); env.forward(); env.rest(0.4)
 
+        # obtain candidate data
         grasp_planner = GraspPlanner(table_z=0.00)
         pos  = env.get_object_position("block_a")
         half = env.get_object_half_size("block_a")
