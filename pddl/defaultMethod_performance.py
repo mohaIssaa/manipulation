@@ -1,11 +1,13 @@
 from tampanda.planners.grasp_planner import GraspType
 from tampanda import GraspPlanner
 
+# reset and get block info to search candidate
 reset_robot(env)
 can_pos  = env.get_object_position("block_a")
 can_half = env.get_object_half_size("block_a")
 can_quat = env.get_object_orientation("block_a")
 
+# search grasp candidate
 grasp_planner = GraspPlanner(table_z=0.27)
 candidates = grasp_planner.generate_candidates(can_pos, can_half, can_quat)
 print(candidates)
@@ -24,7 +26,6 @@ path = planner.plan_to_pose(candidate.grasp_pos, candidate.grasp_quat, dt=0.005,
 env.execute_path(path, planner, step_size=0.003)
 env.wait_idle()
 
-
 # move end effector
 env.controller.close_gripper()
 for _ in range(600):
@@ -38,6 +39,7 @@ env.execute_path(path, planner, step_size=0.003)
 env.wait_idle()
 after_img = render_view(env, azimuth=135, elevation=-25)
 
+# visualization
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 axes[0].imshow(before_img); axes[0].set_title("before"); axes[0].axis("off")
 axes[1].imshow(after_img);  axes[1].set_title("after");  axes[1].axis("off")
