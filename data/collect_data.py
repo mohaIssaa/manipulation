@@ -15,6 +15,16 @@ def collect_data(n=5):
         pose = [x, y, 0.27]
 
         # 1,2: default block with size 4, and 6. 3-6: blocks from ycb for extended advanced test.
+        """
+        Name ID weights dims(mm)
+        cube: 40
+        block: 60
+        gelatin: 9 Gelatin Box 97g 28 x 85 x 73
+        pudding: 8 Pudding Box 187g 35 x 110 x 89
+        wood: 36 Wood Block 729g 85 x 85 x 200
+        bricks: 60 Foam Brick 28g 50 x 75 x 50
+        69 Colored Wood Blocks 10.8g 26
+        """
         idx = np.random.choice(np.arange(6), p=[0.4, 0.4, 0.05, 0.05, 0.08, 0.02]) # 0.28, 0.28, 0.15, 0.15, 0.02, 0.10, 0.02
         if idx == 0:
             builder.add_object("cube", pos=pose, name="block_a")
